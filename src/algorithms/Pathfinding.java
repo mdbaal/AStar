@@ -11,8 +11,10 @@ import java.util.*;
 public class Pathfinding {
 
 
-    public void aStar(Node start,Node goal){
 
+    public void aStar(Node start,Node goal,Node[][] grid){
+        //a* initializing
+        System.out.println("Start");
         //list of visited nodes
         ArrayList<Node> closedSet = new ArrayList<>();
 
@@ -22,43 +24,72 @@ public class Pathfinding {
         //adds the start node to the open set
         openSet.add(start);
 
-        //most efficient previous node
-        Node CameFrom;
         //current node
-        Node current = null;
+        Node current = start;
         //target found y/n
         boolean targetFound = false;
+        //lowest fScore index in openset
+        int lowest = 0;
 
-
+        //start of the pathfinder
         while(!openSet.isEmpty() || !targetFound){
 
-            int lowest = 0;
-
-
-            for (Node n: openSet) {
-                if(n.getF() < openSet.indexOf(lowest)){
+            //get the node with the lowest f cost
+            for (Iterator<Node> iterator = openSet.iterator(); iterator.hasNext(); ) {
+                iterator = openSet.iterator();
+                Node n = iterator.next();
+                if (n.getF() < openSet.get(lowest).getF()) {
                     lowest = openSet.indexOf(n);
-                    current = openSet.get(lowest);
                 }
-
-                if(current == goal){
-                    pathConstruct();
+                current = openSet.get(lowest);
+                //check if current is goal
+                if (current == goal) {
+                    pathConstruct(current);
+                    openSet.clear();
+                    targetFound = true;
                     break;
                 }
 
+                //move current to closedSet
                 openSet.remove(current);
                 closedSet.add(current);
+                //go through neighbours
+                current.addNeighbours(grid);
 
+                for (Node N : current.neighbours) {
+                    int tempG = current.getG();
 
+                    if (!closedSet.contains(N)) {
+
+                        if (openSet.contains(N)) {
+                            if (tempG < N.getG()) {
+                                N.setG(tempG);
+                            }
+                        } else {
+                            N.setG(tempG);
+                            openSet.add(N);
+                        }
+                        N.setCameFrom(current);
+                        N.setH(goal);
+                        N.setF();
+                    }
+                }
             }
-
         }
-
 
     }
 
-    void pathConstruct(){
+    //construct the path
+    private void pathConstruct(Node current){
 
-
+        ArrayList<Node> path = new ArrayList<>();
+        Node temp = current;
+        path.add(temp);
+        //create the path
+        while (temp.getCameFrom()!= null){
+            path.add(temp.getCameFrom());
+            temp = temp.getCameFrom();
+        }
+        System.out.println("done");
     }
 }

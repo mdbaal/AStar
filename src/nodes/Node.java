@@ -1,5 +1,7 @@
 package nodes;
 
+import java.util.ArrayList;
+
 /**
  * Created by Mirco Baalmans on 6/20/2017.
  */
@@ -12,16 +14,42 @@ public class Node {
     private int h;
     private int f;
 
-    private Node[] Neighbours;
+    public ArrayList<Node> neighbours = new ArrayList<>();
+
+    //most efficient previous node
+    private Node cameFrom;
 
 
     //add the neighbours of this node to an array
-    void addNeighbours(){
-        //
+    public void addNeighbours(Node [][] grid) {
+        neighbours = new ArrayList<>();
+
+        if (this.x != 0) {
+            if (grid[x - 1][y] != null) {
+                neighbours.add(grid[x - 1][y]);
+            }
+        }
+
+        if (this.x != grid.length -1) {
+            if (grid[x + 1][y] != null) {
+                neighbours.add(grid[x + 1][y]);
+            }
+
+        }
+        if (this.y != 0) {
+            if (grid[x][y - 1] != null) {
+                neighbours.add(grid[x][y - 1]);
+            }
+        }
+        if (this.y != grid.length -1) {
+            if (grid[x][y + 1] != null) {
+                neighbours.add(grid[x][y + 1]);
+            }
+        }
     }
 
     //calculate the distance to another node
-    public int distanceTo(Node node){
+    private int distanceTo(Node node){
         int distance;
 
         int nX = this.x + node.x;
@@ -33,18 +61,25 @@ public class Node {
     }
 
 
-    // calculate or set the g,h and f of this node
-    public void setG(Node g){
-        this.g = distanceTo(g);
+    // calculate or set the g, h, f and previous of this node
+    public void setG(int g){
+        this.g = g;
     }
     public void setH(Node goal){
         this.h = distanceTo(goal);
     }
     public void setF(){
-       this.f = this.g +  this.h;
+        this.f = this.g +  this.h;
+    }
+    public void setCameFrom(Node cameFrom){
+        this.cameFrom = cameFrom;
+    }
+    public void setCords(int x, int y) {
+        this.x = x;
+        this.y = y;
     }
 
-    //get the g,h and f of this node
+    //get the g, h, f, Camefrom and previous node of this node
     public int getG() {
         return g;
     }
@@ -54,4 +89,9 @@ public class Node {
     public int getF() {
         return f;
     }
+    public Node getCameFrom(){
+        return cameFrom;}
+
+
+
 }

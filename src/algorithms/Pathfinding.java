@@ -58,17 +58,20 @@ public class Pathfinding {
 
                 for (Node N : current.neighbours) {
                     int tempG = current.getG();
-
+                    //if it's not in closedSet
                     if (!closedSet.contains(N)) {
-
+                        //if openSet contains
                         if (openSet.contains(N)) {
+                            //if the tempG is lower than node g set the node g to tempG
                             if (tempG < N.getG()) {
                                 N.setG(tempG);
                             }
+                            //else set if it isn't in open set assign tempG to node g and add it to openSet
                         } else {
                             N.setG(tempG);
                             openSet.add(N);
                         }
+                        //set the cameFrom, heuristic to the goal and the fScore
                         N.setCameFrom(current);
                         N.setH(goal);
                         N.setF();
@@ -76,11 +79,10 @@ public class Pathfinding {
                 }
             }
         }
-
     }
 
     //construct the path
-    private void pathConstruct(Node current){
+    private ArrayList<Node> pathConstruct(Node current){
 
         ArrayList<Node> path = new ArrayList<>();
         Node temp = current;
@@ -90,6 +92,7 @@ public class Pathfinding {
             path.add(temp.getCameFrom());
             temp = temp.getCameFrom();
         }
-        System.out.println("done");
+        System.out.println("Done");
+        return path;
     }
 }

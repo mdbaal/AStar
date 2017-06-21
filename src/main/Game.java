@@ -7,6 +7,7 @@ import nodes.Node;
  * Created by Mirco Baalmans on 6/20/2017.
  */
 
+@SuppressWarnings("ALL")
 class Game {
 
     private int gridSize = 5;
@@ -26,7 +27,7 @@ class Game {
 
         Pathfinding pathfind = new Pathfinding();
 
-        pathfind.aStar(grid[1][4], grid[2][3],grid);
+        pathfind.aStar(grid[0][0], grid[2][3],grid);
     }
 }
 

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 /**
  * Created by Mirco Baalmans on 6/20/2017.
  */
+@SuppressWarnings("ALL")
 public class Node {
 
     private int x;

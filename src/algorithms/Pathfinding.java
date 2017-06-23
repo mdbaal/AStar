@@ -1,5 +1,6 @@
 package algorithms;
 
+import javafx.scene.paint.Color;
 import nodes.Node;
 
 import java.util.*;
@@ -91,6 +92,10 @@ public class Pathfinding {
         while (temp.getCameFrom()!= null){
             path.add(temp.getCameFrom());
             temp = temp.getCameFrom();
+
+        }
+        for(Node n : path){
+            n.getRectangle().setFill(Color.BLUE);
         }
         System.out.println("Done");
         return path;

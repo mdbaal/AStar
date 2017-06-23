@@ -1,6 +1,8 @@
 package main;
 
 import algorithms.Pathfinding;
+import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
 import nodes.Node;
 
 /**
@@ -10,24 +12,43 @@ import nodes.Node;
 @SuppressWarnings("ALL")
 class Game {
 
-    private int gridSize = 5;
+    private int gridSize = 10;
 
     private final Node[][] grid = new Node[gridSize][gridSize];
+    GridPane gridPane = new GridPane();
 
 
   void start() {
+
+      gridPane.setVgap(1);
+      gridPane.setHgap(1);
+      gridPane.setGridLinesVisible(true);
+
       Node node;
-        for (int x = 0; x < 5; x++) {
-            for (int y = 0; y < 5; y++) {
+        for (int x = 0; x < gridSize; x++) {
+            for (int y = 0; y < gridSize; y++) {
+                javafx.scene.shape.Rectangle rect = new javafx.scene.shape.Rectangle();
+                rect.setStroke(Color.BLACK);
+                rect.setHeight(100);
+                rect.setWidth(100);
+                rect.setFill(Color.GREEN);
+
+                gridPane.add(rect, x, y);
+
                 node = new Node();
                 node.setCords(x,y);
+                node.setRect(rect);
                 grid[x][y] = node;
             }
         }
 
         Pathfinding pathfind = new Pathfinding();
 
-        pathfind.aStar(grid[0][0], grid[2][3],grid);
+        pathfind.aStar(grid[0][0], grid[9][3],grid);
+    }
+
+    public GridPane getGridPane() {
+        return gridPane;
     }
 }
 

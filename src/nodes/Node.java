@@ -1,5 +1,9 @@
 package nodes;
 
+import javafx.scene.shape.*;
+import javafx.scene.shape.Rectangle;
+
+import java.awt.*;
 import java.util.ArrayList;
 
 /**
@@ -14,6 +18,8 @@ public class Node {
     private int g;
     private int h;
     private int f;
+
+    private javafx.scene.shape.Rectangle rectangle;
 
     public ArrayList<Node> neighbours = new ArrayList<>();
 
@@ -61,7 +67,6 @@ public class Node {
         return distance;
     }
 
-
     // calculate or set the g, h, f and previous of this node
     public void setG(int g){
         this.g = g;
@@ -79,6 +84,9 @@ public class Node {
         this.x = x;
         this.y = y;
     }
+    public void setRect(Rectangle rect){
+        this.rectangle = rect;
+    }
 
     //get the g, h, f, Camefrom and previous node of this node
     public int getG() {
@@ -92,6 +100,9 @@ public class Node {
     }
     public Node getCameFrom(){
         return cameFrom;}
+    public Rectangle getRectangle(){
+          return this.rectangle;
+        }
 
 
 

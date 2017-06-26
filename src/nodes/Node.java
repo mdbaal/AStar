@@ -21,7 +21,7 @@ public class Node {
 
     private javafx.scene.shape.Rectangle rectangle;
 
-    public ArrayList<Node> neighbours = new ArrayList<>();
+    public ArrayList<Node> neighbours;
 
     //most efficient previous node
     private Node cameFrom;
@@ -30,27 +30,54 @@ public class Node {
     //add the neighbours of this node to an array
     public void addNeighbours(Node [][] grid) {
         neighbours = new ArrayList<>();
-
+        //left
         if (this.x != 0) {
             if (grid[x - 1][y] != null) {
                 neighbours.add(grid[x - 1][y]);
             }
         }
-
+        //right
         if (this.x != grid.length -1) {
             if (grid[x + 1][y] != null) {
                 neighbours.add(grid[x + 1][y]);
             }
 
         }
+        //up
         if (this.y != 0) {
             if (grid[x][y - 1] != null) {
                 neighbours.add(grid[x][y - 1]);
             }
         }
+
+        //down
         if (this.y != grid.length -1) {
             if (grid[x][y + 1] != null) {
                 neighbours.add(grid[x][y + 1]);
+            }
+        }
+        //down left
+        if (this.y != grid.length -1 && this.x != 0) {
+            if (grid[x - 1][y + 1] != null) {
+                neighbours.add(grid[x- 1][y + 1]);
+            }
+        }
+        //down right
+        if (this.y != grid.length -1  && this.x != grid.length-1) {
+            if (grid[x + 1][y + 1] != null) {
+                neighbours.add(grid[x+ 1][y + 1]);
+            }
+        }
+        //up left
+        if (this.y != 0 && this.x != 0) {
+            if (grid[x - 1][y - 1] != null) {
+                neighbours.add(grid[x- 1][y - 1]);
+            }
+        }
+        //up right
+        if (this.y != 0 && this.x != grid.length-1) {
+            if (grid[x + 1][y - 1] != null) {
+                neighbours.add(grid[x + 1][y - 1]);
             }
         }
     }
@@ -59,10 +86,11 @@ public class Node {
     private int distanceTo(Node node){
         int distance;
 
-        int nX = this.x + node.x;
-        int nY =  this.y + node.y;
+        int nX = this.x - node.x;
+        int nY =  this.y - node.y;
 
-        distance = (int) Math.sqrt( nX*2 +nY*2);
+        distance = (int) Math.sqrt( nX*nX + nY*nY);
+
 
         return distance;
     }

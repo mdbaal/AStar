@@ -1,5 +1,6 @@
 package algorithms;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import javafx.scene.paint.Color;
 import nodes.Node;
 
@@ -26,7 +27,7 @@ public class Pathfinding {
         openSet.add(start);
 
         //current node
-        Node current = start;
+        Node current;
         //target found y/n
         boolean targetFound = false;
         //lowest fScore index in openset
@@ -36,9 +37,9 @@ public class Pathfinding {
         while(!openSet.isEmpty() || !targetFound){
 
             //get the node with the lowest f cost
-            for (Iterator<Node> iterator = openSet.iterator(); iterator.hasNext(); ) {
-                iterator = openSet.iterator();
-                Node n = iterator.next();
+            for (int i = 0; i < openSet.size(); i++) {
+                Node n = openSet.get(i);
+
                 if (n.getF() < openSet.get(lowest).getF()) {
                     lowest = openSet.indexOf(n);
                 }
@@ -62,20 +63,25 @@ public class Pathfinding {
                     //if it's not in closedSet
                     if (!closedSet.contains(N)) {
                         //if openSet contains
+                        Boolean newPath = false;
                         if (openSet.contains(N)) {
                             //if the tempG is lower than node g set the node g to tempG
                             if (tempG < N.getG()) {
                                 N.setG(tempG);
+                                newPath = true;
                             }
                             //else set if it isn't in open set assign tempG to node g and add it to openSet
                         } else {
                             N.setG(tempG);
                             openSet.add(N);
+                            newPath = true;
                         }
-                        //set the cameFrom, heuristic to the goal and the fScore
-                        N.setCameFrom(current);
-                        N.setH(goal);
-                        N.setF();
+                        if(newPath) {
+                            //set the cameFrom, heuristic to the goal and the fScore
+                            N.setCameFrom(current);
+                            N.setH(goal);
+                            N.setF();
+                        }
                     }
                 }
             }

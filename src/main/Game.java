@@ -12,7 +12,7 @@ import nodes.Node;
 @SuppressWarnings("ALL")
 class Game {
 
-    private int gridSize = 10;
+    private int gridSize = 80;
 
     private final Node[][] grid = new Node[gridSize][gridSize];
     GridPane gridPane = new GridPane();
@@ -29,8 +29,8 @@ class Game {
             for (int y = 0; y < gridSize; y++) {
                 javafx.scene.shape.Rectangle rect = new javafx.scene.shape.Rectangle();
                 rect.setStroke(Color.BLACK);
-                rect.setHeight(100);
-                rect.setWidth(100);
+                rect.setHeight(10);
+                rect.setWidth(10);
                 rect.setFill(Color.GREEN);
 
                 gridPane.add(rect, x, y);
@@ -44,7 +44,7 @@ class Game {
 
         Pathfinding pathfind = new Pathfinding();
 
-        pathfind.aStar(grid[0][0], grid[9][3],grid);
+        pathfind.aStar(grid[0][0], grid[70][70],grid);
     }
 
     public GridPane getGridPane() {

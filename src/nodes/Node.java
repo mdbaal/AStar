@@ -1,15 +1,13 @@
 package nodes;
 
-import javafx.scene.shape.*;
 import javafx.scene.shape.Rectangle;
 
-import java.awt.*;
 import java.util.ArrayList;
 
 /**
  * Created by Mirco Baalmans on 6/20/2017.
  */
-@SuppressWarnings("ALL")
+
 public class Node {
 
     private int x;
@@ -19,14 +17,17 @@ public class Node {
     private int h;
     private int f;
 
+    public Boolean notWalkAble = false;
+
     private javafx.scene.shape.Rectangle rectangle;
 
     public ArrayList<Node> neighbours;
 
     //most efficient previous node
     private Node cameFrom;
-
-
+    public Node(Boolean notWalkAble){
+        this.notWalkAble = notWalkAble;
+    }
     //add the neighbours of this node to an array
     public void addNeighbours(Node [][] grid) {
         neighbours = new ArrayList<>();
@@ -83,17 +84,22 @@ public class Node {
     }
 
     //calculate the distance to another node
-    private int distanceTo(Node node){
+    public int distanceTo(Node node) {
         int distance;
+        int nY;
+        int nX;
 
-        int nX = this.x - node.x;
-        int nY =  this.y - node.y;
 
-        distance = (int) Math.sqrt( nX*nX + nY*nY);
+
+         nX = Math.abs(this.x - node.x);
+         nY =  Math.abs( this.y - node.y);
+
+        distance = (int) Math.sqrt(nX * nX + nY * nY);
 
 
         return distance;
     }
+
 
     // calculate or set the g, h, f and previous of this node
     public void setG(int g){
@@ -129,8 +135,8 @@ public class Node {
     public Node getCameFrom(){
         return cameFrom;}
     public Rectangle getRectangle(){
-          return this.rectangle;
-        }
+        return this.rectangle;
+    }
 
 
 

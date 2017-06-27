@@ -1,9 +1,11 @@
 package main;
 
-import algorithms.Pathfinding;
+import algorithms.Pathfinder;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import nodes.Node;
+
+import java.util.Random;
 
 /**
  * Created by Mirco Baalmans on 6/20/2017.
@@ -20,31 +22,37 @@ class Game {
 
   void start() {
 
-      gridPane.setVgap(1);
-      gridPane.setHgap(1);
+      gridPane.setVgap(0);
+      gridPane.setHgap(0);
       gridPane.setGridLinesVisible(true);
 
       Node node;
+      Random random = new Random();
         for (int x = 0; x < gridSize; x++) {
             for (int y = 0; y < gridSize; y++) {
                 javafx.scene.shape.Rectangle rect = new javafx.scene.shape.Rectangle();
-                rect.setStroke(Color.BLACK);
                 rect.setHeight(10);
                 rect.setWidth(10);
-                rect.setFill(Color.GREEN);
 
+                if(random.nextDouble() <.3) {
+                    node = new Node(true);
+                    rect.setFill(Color.BLACK);
+                }else{
+                    node = new Node(false);
+                    rect.setFill(Color.GREEN);
+                }
                 gridPane.add(rect, x, y);
 
-                node = new Node();
                 node.setCords(x,y);
                 node.setRect(rect);
                 grid[x][y] = node;
             }
         }
 
-        Pathfinding pathfind = new Pathfinding();
+        Pathfinder pathfind = new Pathfinder();
 
-        pathfind.aStar(grid[0][0], grid[70][70],grid);
+        pathfind.aStar(grid[0][0], grid[79][79],grid);
+
     }
 
     public GridPane getGridPane() {

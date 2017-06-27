@@ -1,6 +1,5 @@
 package algorithms;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import javafx.scene.paint.Color;
 import nodes.Node;
 
@@ -10,7 +9,7 @@ import java.util.*;
  * Created by mirco on 6/20/2017.
  * pathfinding using AStar
  */
-public class Pathfinding {
+public class Pathfinder {
 
 
 
@@ -38,12 +37,8 @@ public class Pathfinding {
 
             //get the node with the lowest f cost
             for (int i = 0; i < openSet.size(); i++) {
-                Node n = openSet.get(i);
 
-                if (n.getF() < openSet.get(lowest).getF()) {
-                    lowest = openSet.indexOf(n);
-                }
-                current = openSet.get(lowest);
+                current = getLowest(openSet);
                 //check if current is goal
                 if (current == goal) {
                     pathConstruct(current);
@@ -59,9 +54,9 @@ public class Pathfinding {
                 current.addNeighbours(grid);
 
                 for (Node N : current.neighbours) {
-                    int tempG = current.getG();
+                    int tempG = current.getG() + N.distanceTo(current);
                     //if it's not in closedSet
-                    if (!closedSet.contains(N)) {
+                    if (!closedSet.contains(N) && !N.notWalkAble) {
                         //if openSet contains
                         Boolean newPath = false;
                         if (openSet.contains(N)) {
@@ -81,6 +76,7 @@ public class Pathfinding {
                             N.setCameFrom(current);
                             N.setH(goal);
                             N.setF();
+
                         }
                     }
                 }
@@ -88,8 +84,21 @@ public class Pathfinding {
         }
     }
 
+
+    Node getLowest(ArrayList<Node> list){
+        Node lowest = null;
+        int winner = 0;
+        for (int i = 1; i < list.size(); i++) {
+            if (list.get(i).getF() < list.get(winner).getF()) {
+                winner = i;
+            }
+        }
+        lowest = list.get(winner);
+        return lowest;
+    }
+
     //construct the path
-    private ArrayList<Node> pathConstruct(Node current){
+    private void pathConstruct(Node current){
 
         ArrayList<Node> path = new ArrayList<>();
         Node temp = current;
@@ -104,6 +113,5 @@ public class Pathfinding {
             n.getRectangle().setFill(Color.BLUE);
         }
         System.out.println("Done");
-        return path;
     }
 }

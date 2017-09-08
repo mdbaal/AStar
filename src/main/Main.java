@@ -14,8 +14,13 @@ public class Main extends Application {
         primaryStage.setTitle("Hello World");
         primaryStage.setScene(new Scene(root,1000,1000));
         Game game = new Game();
-        game.start();
+        game.makeGrid();
         root.getChildren().add(game.getGridPane());
+        root.getChildren().add(game.getButton());
+        root.getChildren().add(game.getMove());
+        root.getChildren().get(2).setLayoutX(50);
+
+
         primaryStage.show();
 
     }

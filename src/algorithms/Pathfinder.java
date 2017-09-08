@@ -13,9 +13,11 @@ public class Pathfinder {
 
 
 
-    public void aStar(Node start,Node goal,Node[][] grid){
+    public ArrayList<Node> aStar(Node start,Node goal,Node[][] grid){
         //a* initializing
         System.out.println("Start");
+        start.notWalkAble = false;
+        goal.notWalkAble = false;
         //list of visited nodes
         ArrayList<Node> closedSet = new ArrayList<>();
 
@@ -33,7 +35,7 @@ public class Pathfinder {
         int lowest = 0;
 
         //start of the pathfinder
-        while(!openSet.isEmpty() || !targetFound){
+        while(!openSet.isEmpty()){
 
             //get the node with the lowest f cost
             for (int i = 0; i < openSet.size(); i++) {
@@ -41,10 +43,9 @@ public class Pathfinder {
                 current = getLowest(openSet);
                 //check if current is goal
                 if (current == goal) {
-                    pathConstruct(current);
-                    openSet.clear();
+
                     targetFound = true;
-                    break;
+                    return pathConstruct(current);
                 }
 
                 //move current to closedSet
@@ -52,7 +53,6 @@ public class Pathfinder {
                 closedSet.add(current);
                 //go through neighbours
                 current.addNeighbours(grid);
-
                 for (Node N : current.neighbours) {
                     int tempG = current.getG() + N.distanceTo(current);
                     //if it's not in closedSet
@@ -76,17 +76,21 @@ public class Pathfinder {
                             N.setCameFrom(current);
                             N.setH(goal);
                             N.setF();
-
                         }
                     }
                 }
             }
         }
+        //no target found
+        targetFound = false;
+        System.out.println("No path found");
+        return null;
     }
 
-
+    // get the lowest Node in a list
     Node getLowest(ArrayList<Node> list){
-        Node lowest = null;
+
+        Node lowest;
         int winner = 0;
         for (int i = 1; i < list.size(); i++) {
             if (list.get(i).getF() < list.get(winner).getF()) {
@@ -98,7 +102,7 @@ public class Pathfinder {
     }
 
     //construct the path
-    private void pathConstruct(Node current){
+    private ArrayList<Node> pathConstruct(Node current){
 
         ArrayList<Node> path = new ArrayList<>();
         Node temp = current;
@@ -113,5 +117,6 @@ public class Pathfinder {
             n.getRectangle().setFill(Color.BLUE);
         }
         System.out.println("Done");
+        return  path;
     }
 }

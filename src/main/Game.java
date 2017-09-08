@@ -83,7 +83,9 @@ class Game {
 
         makeGrid();
         path = pathfind.aStar(grid[8][8], grid[79][79],grid);
-        mover = new Mover(grid,path);
+        if(path != null) {
+            mover = new Mover(grid, path);
+        }
     }
 
     void movePlayer(){

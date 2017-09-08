@@ -29,25 +29,18 @@ public class Pathfinder {
 
         //current node
         Node current;
-        //target found y/n
-        boolean targetFound = false;
-        //lowest fScore index in openset
-        int lowest = 0;
 
         //start of the pathfinder
         while(!openSet.isEmpty()){
 
             //get the node with the lowest f cost
             for (int i = 0; i < openSet.size(); i++) {
-
-                current = getLowest(openSet);
+                bubbleSort(openSet);
+                current =openSet.get(0);
                 //check if current is goal
                 if (current == goal) {
-
-                    targetFound = true;
                     return pathConstruct(current);
                 }
-
                 //move current to closedSet
                 openSet.remove(current);
                 closedSet.add(current);
@@ -82,23 +75,23 @@ public class Pathfinder {
             }
         }
         //no target found
-        targetFound = false;
         System.out.println("No path found");
         return null;
     }
 
-    // get the lowest Node in a list
-    Node getLowest(ArrayList<Node> list){
-
-        Node lowest;
-        int winner = 0;
-        for (int i = 1; i < list.size(); i++) {
-            if (list.get(i).getF() < list.get(winner).getF()) {
-                winner = i;
+    // get the lowest Node in a  via sorting the list in bubble sort
+    void bubbleSort(ArrayList<Node> list){
+            int i,j;
+            Node temp;
+            for(j = 0;j < list.size();j++){
+                for(i = 1;i < list.size() - j;i++){
+                    if(list.get(i-1).getF() > list.get(i).getF()){
+                        temp = list.get(i);
+                        list.set(i,list.get(i-1));
+                        list.set(i-1,temp);
+                    }
+                }
             }
-        }
-        lowest = list.get(winner);
-        return lowest;
     }
 
     //construct the path

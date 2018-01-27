@@ -11,8 +11,8 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
         Group root = new Group();
-        primaryStage.setTitle("Hello World");
-        primaryStage.setScene(new Scene(root,1000,1000));
+        primaryStage.setTitle("AStar");
+        primaryStage.setScene(new Scene(root,1920,1080));
         Game game = new Game();
         game.makeGrid();
         root.getChildren().add(game.getGridPane());

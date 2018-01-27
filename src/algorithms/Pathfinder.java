@@ -1,9 +1,9 @@
 package algorithms;
 
 import javafx.scene.paint.Color;
+import timer.Timer;
 import nodes.Node;
-
-import java.util.*;
+import java.util.ArrayList;
 
 /**
  * Created by mirco on 6/20/2017.
@@ -30,6 +30,9 @@ public class Pathfinder {
         //current node
         Node current;
 
+        //timer
+        Timer timer = new Timer();
+        timer.startStopwatch();
         //start of the pathfinder
         while(!openSet.isEmpty()){
 
@@ -39,6 +42,8 @@ public class Pathfinder {
                 current =openSet.get(0);
                 //check if current is goal
                 if (current == goal) {
+                    timer.stopStopwatch();
+                    timer.printResultStopwatch("milliseconds");
                     return pathConstruct(current);
                 }
                 //move current to closedSet
@@ -76,11 +81,13 @@ public class Pathfinder {
         }
         //no target found
         System.out.println("No path found");
+        timer.stopStopwatch();
+        timer.printResultStopwatch("seconds");
         return null;
     }
 
     // get the lowest Node in a  via sorting the list in bubble sort
-    void bubbleSort(ArrayList<Node> list){
+    private void bubbleSort(ArrayList<Node> list){
             int i,j;
             Node temp;
             for(j = 0;j < list.size();j++){

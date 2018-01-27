@@ -8,6 +8,7 @@ import java.util.ArrayList;
  * Created by Mirco Baalmans on 6/20/2017.
  */
 
+
 public class Node {
 
     public int x;

@@ -82,7 +82,7 @@ class Game {
     public void startGame(){
 
         makeGrid();
-        path = pathfind.aStar(grid[8][8], grid[79][79],grid);
+        path = pathfind.aStar(grid[0][0], grid[5][5],grid);
         if(path != null) {
             mover = new Mover(grid, path);
         }
